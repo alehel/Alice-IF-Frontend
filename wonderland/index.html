@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alice's Adventures in Wonderland — Play</title>
+<meta name="description" content="Play Alice's Adventures in Wonderland as interactive fiction, right in your browser.">
+<link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg">
+<link rel="stylesheet" href="../assets/css/site.css">
+<link rel="stylesheet" href="../assets/css/play.css">
+</head>
+<body class="play">
+
+<nav class="binding">
+  <a class="back" href="../">← The Library</a>
+  <div class="title">Alice's Adventures in Wonderland</div>
+  <div class="actions">
+    <button id="btn-save" type="button" title="Drop a bookmark file into your Downloads (or type SAVE)">Save</button>
+    <button id="btn-restore" type="button" title="Bring a bookmark file back (or type RESTORE)">Restore</button>
+  </div>
+</nav>
+
+<main class="desk">
+  <div class="book-page">
+    <div id="gameport">
+      <div id="windowport">
+        <noscript><hr>
+        <p>The Wonderland machinery is built of JavaScript — you will need to
+        switch it on in your browser to play.</p>
+        <hr></noscript>
+      </div>
+      <div id="loadingpane">
+        <img src="../assets/img/cheshire-grin.webp" alt="">
+        <em>Falling down the rabbit-hole…</em>
+      </div>
+      <div id="errorpane" style="display:none;"><div id="errorcontent">…</div></div>
+    </div>
+  </div>
+  <div class="desk-hint">
+    type <kbd>save</kbd> — a bookmark falls into your Downloads &nbsp;·&nbsp;
+    type <kbd>restore</kbd> — hand it back &nbsp;·&nbsp;
+    type <kbd>help</kbd> — learn the ropes
+  </div>
+</main>
+
+<img class="desk-art left" src="../assets/img/caterpillar.webp" alt="" aria-hidden="true">
+<img class="desk-art right" src="../assets/img/cheshire-tree.webp" alt="" aria-hidden="true">
+
+<div id="alice-toast" role="status" aria-live="polite"></div>
+
+<script src="../assets/vendor/jquery-1.12.4.min.js"></script>
+<script src="../assets/vendor/glkote.js"></script>
+<script src="../assets/vendor/glkapi.js"></script>
+<script src="../assets/vendor/zvm.min.js"></script>
+<script src="../assets/js/alice-dialog.js"></script>
+<script src="../assets/js/alice-play.js"></script>
+<script>
+  AlicePlay.boot({
+    story: '../stories/alice.z8',
+    save_basename: 'alice-in-wonderland',
+  });
+</script>
+
+</body>
+</html>

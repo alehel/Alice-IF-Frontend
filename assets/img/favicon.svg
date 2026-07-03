@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- a playing card for the Queen's pack: the Ace of Alice -->
+  <rect x="8" y="4" width="48" height="56" rx="6" fill="#f8f0dc" stroke="#2c2114" stroke-width="2.5"/>
+  <rect x="12.5" y="8.5" width="39" height="47" rx="3.5" fill="none" stroke="#a97f2f" stroke-width="1.5"/>
+  <text x="32" y="34" font-family="Georgia, 'Times New Roman', serif" font-weight="bold" font-size="27" text-anchor="middle" fill="#2c2114">A</text>
+  <path d="M32 52.5 c-6 -5.4 -9.5 -8.3 -9.5 -12 a5 5 0 0 1 9.5 -2.2 a5 5 0 0 1 9.5 2.2 c0 3.7 -3.5 6.6 -9.5 12z" fill="#7c1f1f"/>
+</svg>

@@ -1,0 +1,422 @@
+/* ------------------------------------------------------------------
+   The Alice Tales — play page + GlkOte theme.
+   Layout-critical rules are carried over from GlkOte's stock
+   stylesheet (public domain, by Andrew Plotkin); the dress is ours.
+   ------------------------------------------------------------------ */
+
+html, body { height: 100%; }
+
+body.play {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;               /* the book page scrolls, not the body */
+}
+
+/* ---- Top bar: the red cloth binding ------------------------------- */
+
+.binding {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0 1.1rem;
+  height: 3.4rem;
+  background:
+    linear-gradient(180deg, #8d2a24 0%, var(--crimson) 55%, var(--crimson-deep) 100%);
+  color: var(--gilt-pale);
+  box-shadow: 0 2px 10px rgba(46, 26, 4, .45);
+  z-index: 5;
+}
+.binding::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  top: 3.4rem;
+  height: 4px;
+  background: linear-gradient(180deg, rgba(0,0,0,.28), rgba(0,0,0,0));
+  pointer-events: none;
+}
+
+.binding a.back {
+  color: var(--gilt-pale);
+  text-decoration: none;
+  font-variant: small-caps;
+  letter-spacing: .16em;
+  font-size: .95rem;
+  white-space: nowrap;
+}
+.binding a.back:hover { color: #fff; }
+
+.binding .title {
+  flex: 1;
+  text-align: center;
+  font-variant: small-caps;
+  letter-spacing: .3em;
+  font-size: .95rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.binding .actions {
+  display: flex;
+  gap: .55rem;
+}
+
+.binding button {
+  font-family: var(--serif);
+  font-variant: small-caps;
+  letter-spacing: .14em;
+  font-size: .88rem;
+  color: var(--gilt-pale);
+  background: rgba(0, 0, 0, .14);
+  border: 1px solid rgba(227, 201, 131, .55);
+  border-radius: 2px;
+  padding: .3em 1em .4em;
+  cursor: pointer;
+  transition: background-color .15s ease, color .15s ease;
+  white-space: nowrap;
+}
+.binding button:hover, .binding button:focus-visible {
+  background: var(--gilt-pale);
+  color: var(--crimson-deep);
+}
+
+/* ---- The open page ------------------------------------------------- */
+
+.desk {
+  flex: 1;
+  min-height: 0;                  /* let the child shrink */
+  display: flex;
+  flex-direction: column;
+  padding: 1.4rem 1.4rem 0;
+}
+
+.book-page {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  max-width: 50rem;
+  margin: 0 auto;
+  background:
+    var(--grain),
+    linear-gradient(178deg, #fbf4e3 0%, var(--page) 40%, #f1e6c9 100%);
+  border: 1px solid var(--page-edge);
+  border-bottom: none;
+  border-radius: 3px 3px 0 0;
+  box-shadow:
+    0 -1px 0 rgba(255, 255, 250, .8) inset,
+    0 10px 42px -12px rgba(46, 26, 4, .5),
+    0 2px 10px rgba(46, 26, 4, .18);
+}
+
+/* faint margin engravings on a wide desk */
+.desk-art {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  z-index: 0;
+  opacity: .08;
+  filter: sepia(.6);
+  pointer-events: none;
+}
+@media (min-width: 1500px) {
+  .desk-art { display: block; }
+  .desk-art.left  { left: 1vw;  width: 17vw; max-width: 330px; }
+  .desk-art.right { right: 1vw; width: 15vw; max-width: 300px; }
+}
+
+/* the tips line under the page */
+.desk-hint {
+  flex: none;
+  text-align: center;
+  font-size: .85rem;
+  font-variant: small-caps;
+  letter-spacing: .18em;
+  color: var(--ink-faint);
+  padding: .55rem 1rem .65rem;
+}
+.desk-hint kbd {
+  font-family: var(--serif);
+  font-size: 1em;
+  color: var(--ink-soft);
+}
+
+/* ==================================================================
+   GlkOte — structure (do not tamper) + Alice dress
+   ================================================================== */
+
+#gameport {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+#windowport { width: 100%; height: 100%; }
+
+.WindowFrame {
+  position: absolute;             /* stock: required */
+  margin: 0;
+  background: transparent;
+}
+
+/* -- the story window: the printed page -- */
+
+.BufferWindow {
+  overflow: scroll;               /* stock: vertical scrollbar mandatory */
+  overflow-x: hidden;
+  font-family: var(--serif);
+  font-size: 19px;
+  line-height: 1.62;
+  padding: 1.6rem 3.1rem 1.4rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--rule) transparent;
+}
+.BufferWindow::-webkit-scrollbar { width: 9px; }
+.BufferWindow::-webkit-scrollbar-thumb {
+  background: var(--rule);
+  border-radius: 9px;
+  border: 2px solid var(--page);
+}
+.BufferWindow::-webkit-scrollbar-track { background: transparent; }
+
+.BufferLine { white-space: pre-wrap; }        /* stock */
+
+.BlankLineSpan { display: none; }             /* stock */
+.BlankLineSpan:only-child { display: inline; }
+
+.BufferLine:last-child { margin-bottom: 14px; }   /* stock */
+
+.HasNoInputField .BufferLine:last-child .BlankLineSpan { display: none; }  /* stock */
+.HasNoInputField .BufferLine:last-child .InvisiblePos { display: none; }   /* stock */
+
+.InvisibleCursor { position: relative; }      /* stock */
+
+/* -- the status line: a running head -- */
+
+.GridWindow {
+  overflow: hidden;               /* stock */
+  background: transparent;
+  font-family: var(--serif);
+  font-variant: small-caps;
+  letter-spacing: .14em;
+  font-size: 15px;
+  color: var(--ink-soft);
+  padding: 14px 3.1rem 2px;
+  /* double hairline under the running head: rule, paper, rule.
+     Inset shadows paint on top of one another, so the middle layer
+     masks the third back to a hairline; box-shadow keeps the
+     window's measured size unchanged. */
+  box-shadow:
+    inset 0 -1px 0 var(--rule),
+    inset 0 -2px 0 #faf3e2,
+    inset 0 -3px 0 var(--rule);
+}
+
+.GridLine { white-space: pre; }               /* stock */
+
+/* -- paging -- */
+
+.MorePrompt {
+  font-variant: small-caps;
+  letter-spacing: .18em;
+  font-size: .85rem;
+  position: absolute;             /* stock */
+  pointer-events: none;
+  background: var(--crimson);
+  color: var(--gilt-pale);
+  opacity: .82;
+  padding: 1px 10px 3px;
+  border-radius: 3px;
+}
+
+.PreviousMark {
+  position: absolute;             /* stock */
+  background: var(--gilt);
+  height: 2px;
+  width: 14px;
+  top: 0;
+  right: 0;
+}
+
+/* -- the player's pen -- */
+
+.Input {
+  border: none;                   /* stock: strip the input chrome */
+  margin: 0;
+  padding: 0;
+  outline-width: 0;
+  outline-style: none;
+  background: none;
+  font-weight: 500;
+  font-style: italic;
+  color: var(--crimson-deep);
+  caret-color: var(--crimson);
+}
+
+.BufferWindow .Input {
+  font-family: var(--serif);
+  font-size: 19px;
+}
+
+.GridWindow .Input {
+  font-family: var(--serif);
+  font-size: 15px;
+}
+
+.Input:focus::placeholder { color: transparent; }   /* stock */
+
+/* echoed commands in the story */
+.Style_input {
+  font-weight: 500;
+  font-style: italic;
+  color: var(--crimson-deep);
+}
+
+/* the standard Glk styles, in Alice dress */
+.Style_normal { }
+.Style_emphasized { font-style: italic; }
+.Style_preformatted { font-family: 'Courier New', Courier, monospace; font-size: .92em; }
+.Style_header { font-weight: 700; font-family: var(--display); letter-spacing: .02em; }
+.BufferWindow .Style_header { font-size: 21px; }
+.Style_subheader { font-weight: 700; }
+.Style_alert { font-weight: 700; color: var(--crimson-deep); }
+.Style_note { font-style: italic; color: var(--ink-soft); }
+.Style_blockquote { background: rgba(201, 162, 75, .16); }
+.Style_user1 { }
+.Style_user2 { }
+
+/* image alignment (stock, kept for completeness) */
+.ImageMarginLeft  { float: left;  margin-right: .5em; }
+.ImageMarginRight { float: right; margin-left: .5em; }
+.ImageInlineDown   { vertical-align: text-top; }
+.ImageInlineUp     { vertical-align: text-bottom; }
+.ImageInlineCenter { vertical-align: middle; }
+.FlowBreak { clear: both; }
+.GraphicsWindow canvas { display: block; background-color: white; }
+
+/* ---- Loading pane -------------------------------------------------- */
+
+#loadingpane {
+  position: absolute;             /* stock */
+  width: 100%;
+  text-align: center;
+  top: 22%;
+}
+#loadingpane img {
+  width: min(240px, 60%);
+  height: auto;
+  opacity: .85;
+  filter: sepia(.25);
+}
+#loadingpane em {
+  display: block;
+  margin-top: 1.4rem;
+  font-size: 1.05rem;
+  color: var(--ink-soft);
+}
+
+/* ---- Error pane: read out by the King's Messenger ------------------ */
+
+#errorpane {
+  position: absolute;             /* stock */
+  top: 0;
+  width: 100%;
+  z-index: 10;
+  padding: 1rem;
+  background: transparent;
+  pointer-events: none;
+}
+#errorcontent {
+  pointer-events: auto;
+  max-width: 34rem;
+  margin: 0 auto;
+  background: var(--page);
+  color: var(--crimson-deep);
+  border: 1px solid var(--crimson);
+  outline: 3px double var(--crimson);
+  outline-offset: 3px;
+  padding: 1rem 1.4rem;
+  font-size: 1rem;
+  text-align: center;
+  box-shadow: 0 12px 30px -10px rgba(46, 26, 4, .5);
+}
+#errorpane.WarningPane #errorcontent {
+  color: var(--ink-soft);
+  border-color: var(--rule);
+  outline-color: var(--rule);
+}
+
+/* ---- Toast: the bookmark fell into your Downloads ------------------ */
+
+#alice-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 2.4rem;
+  transform: translate(-50%, 160%);
+  z-index: 50;
+  max-width: min(30rem, calc(100vw - 2rem));
+  background: var(--page);
+  border: 1px solid var(--gilt);
+  outline: 3px double var(--gilt);
+  outline-offset: 3px;
+  color: var(--ink);
+  padding: .8rem 1.5rem .9rem;
+  text-align: center;
+  font-size: .98rem;
+  box-shadow: 0 14px 34px -10px rgba(46, 26, 4, .55);
+  transition: transform .35s ease, opacity .35s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+#alice-toast.shown {
+  transform: translate(-50%, 0);
+  opacity: 1;
+}
+#alice-toast .file {
+  display: block;
+  margin-top: .15rem;
+  font-style: italic;
+  font-size: .88rem;
+  color: var(--ink-faint);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ==================================================================
+   Small screens: the page fills the room
+   ================================================================== */
+
+@media (max-width: 780px) {
+  .desk { padding: 0; }
+
+  .book-page {
+    max-width: none;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .binding { height: 3rem; padding: 0 .8rem; gap: .6rem; }
+  .binding::after { top: 3rem; }
+  .binding .title { display: none; }
+  .binding a.back { font-size: .88rem; }
+  .binding button { font-size: .82rem; padding: .28em .8em .38em; }
+
+  .BufferWindow {
+    font-size: 17px;
+    line-height: 1.58;
+    padding: 1rem 1.1rem .9rem;
+  }
+  .BufferWindow .Input { font-size: 17px; }
+
+  .GridWindow {
+    font-size: 13px;
+    padding: 9px 1.1rem 2px;
+  }
+  .GridWindow .Input { font-size: 13px; }
+
+  .desk-hint { display: none; }
+}

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Alice Tales — Interactive Fiction after Lewis Carroll</title>
+<meta name="description" content="Play Alice's Adventures in Wonderland and Through the Looking-Glass as interactive fiction, right in your browser — with John Tenniel's original illustrations.">
+<link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+
+<header class="masthead">
+  <div class="fleuron" aria-hidden="true">❦</div>
+  <h1>ALICE</h1>
+  <p class="subtitle">Two Interactive Fictions</p>
+  <p class="byline">after the books by Lewis Carroll, with the illustrations of Sir&nbsp;John&nbsp;Tenniel</p>
+</header>
+
+<main>
+  <section class="bookshelf" aria-label="The two books">
+
+    <a class="book" href="wonderland/" aria-label="Play Alice's Adventures in Wonderland">
+      <span class="cover cover-wonderland">
+        <span class="medallion">
+          <img src="assets/img/rabbit-watch.webp" alt="The White Rabbit, in his waistcoat, consulting his pocket-watch" loading="lazy">
+        </span>
+        <h2>Alice's Adventures<br>in Wonderland</h2>
+        <hr class="cover-rule">
+        <span class="cover-sub">“Oh dear! Oh dear! I shall be too late!”</span>
+        <span class="cover-foot">MDCCCLXV</span>
+      </span>
+      <span class="book-info">
+        <span class="meta">Twelve chapters · One hundred points · No way to lose</span>
+        <span class="btn">Begin the adventure</span>
+      </span>
+    </a>
+
+    <a class="book" href="looking-glass/" aria-label="About Through the Looking-Glass (still being written)">
+      <span class="cover cover-lookingglass">
+        <span class="medallion">
+          <img src="assets/img/through-mirror.webp" alt="Alice climbing through the looking-glass over the mantelpiece" loading="lazy">
+        </span>
+        <h2>Through the<br>Looking-Glass</h2>
+        <hr class="cover-rule">
+        <span class="cover-sub">and What Alice Found There</span>
+        <span class="cover-foot">MDCCCLXXI</span>
+      </span>
+      <span class="book-info">
+        <span class="ribbon-row"><span class="ribbon">Still being written</span></span>
+        <span class="btn">Peep through the glass</span>
+      </span>
+    </a>
+
+  </section>
+
+  <div class="divider" aria-hidden="true"><span>❦</span></div>
+
+  <section class="howto" id="how-to-play">
+    <h2>How the Story Is Played</h2>
+    <p class="lede">These are works of interactive fiction: the book writes itself as you go,
+    and it goes wherever you tell it. You play the part of Alice.</p>
+
+    <div class="howto-grid">
+      <div class="howto-card">
+        <img src="assets/img/herald-rabbit.webp" alt="The White Rabbit as herald, blowing a trumpet" loading="lazy">
+        <h3><span class="step">I — Command</span>Say what Alice does</h3>
+        <p>Type plain instructions at the <kbd>&gt;</kbd> prompt — <kbd>look</kbd>, <kbd>take the key</kbd>,
+        <kbd>go north</kbd>, <kbd>follow the rabbit</kbd>. Type <kbd>help</kbd> in the game
+        for the full art of conversation, and <kbd>think</kbd> whenever you are lost.</p>
+      </div>
+      <div class="howto-card">
+        <img src="assets/img/drink-me.webp" alt="Alice holding the little bottle labelled Drink Me" loading="lazy">
+        <h3><span class="step">II — Save</span>Drop a bookmark</h3>
+        <p>Type <kbd>save</kbd> at any moment and a little bookmark file falls straight
+        into your Downloads folder. Keep as many as you please — this dream
+        holds a hundred points across twelve chapters.</p>
+      </div>
+      <div class="howto-card">
+        <img src="assets/img/alice-curtain.webp" alt="Alice drawing back the curtain to find the little door" loading="lazy">
+        <h3><span class="step">III — Restore</span>Find your way back</h3>
+        <p>Returning later — even on another machine — type <kbd>restore</kbd> and hand
+        the bookmark back. The curtain lifts, and you are behind the little
+        door exactly where you left it.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider" aria-hidden="true"><span>❦</span></div>
+
+  <blockquote class="quotation">
+    “Begin at the beginning,” the King said, gravely, “and go on till you
+    come to the end: then stop.”
+    <cite>Alice's Adventures in Wonderland, ch. XII</cite>
+  </blockquote>
+</main>
+
+<footer class="colophon">
+  <img class="grin" src="assets/img/cheshire-grin.webp" alt="The Cheshire Cat, fading away until nothing is left but its grin">
+  <p>The novels of Lewis Carroll (1865 &amp; 1871) and the engravings of Sir John Tenniel
+  are in the public domain; the illustrations here were digitised by
+  <a href="https://standardebooks.org">Standard&nbsp;Ebooks</a>.</p>
+  <p><a href="https://github.com/alehel/Alice-In-Wonderland-IF">The Wonderland game</a> is written in Inform&nbsp;6
+  and runs in your browser on the <a href="https://github.com/curiousdannii/ifvms.js">ZVM</a> engine with
+  <a href="https://eblong.com/zarf/glk/glkote.html">GlkOte</a>, by Dannii&nbsp;Willis and Andrew&nbsp;Plotkin.
+  No account, no server: the story plays entirely on your side of the glass.</p>
+</footer>
+
+</body>
+</html>

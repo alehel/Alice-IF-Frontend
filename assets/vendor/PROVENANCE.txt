@@ -1,0 +1,15 @@
+Vendored libraries
+==================
+
+glkote.js, glkapi.js — GlkOte/GlkApi 2.3.7 (MIT)
+  from https://github.com/erkyrath/quixe @ d1710c27b0ac293d40bc67cb1b3de38c1ef7fa9f (src/glkote/)
+jquery-1.12.4.min.js — jQuery (MIT), required by GlkOte
+zvm.min.js — ifvms.js 1.1.6 (MIT), https://github.com/curiousdannii/ifvms.js
+  (npm package "ifvms" 1.1.6, dist/zvm.min.js)
+
+stories/alice.z8 — from https://github.com/alehel/Alice-In-Wonderland-IF @ d04f25e8858db52094be682fc50f36afe7dbff7f
+
+Illustrations: John Tenniel (public domain), vectorised by Standard Ebooks:
+  https://github.com/standardebooks/lewis-carroll_alices-adventures-in-wonderland @ 68284f72ad835e0844c6168f5e8d0b0d2b63fbfe
+  https://github.com/standardebooks/lewis-carroll_through-the-looking-glass @ d3a3b8715e5d4164407171866ea0ef8d88e62cb1
+  rasterised to WebP at web resolution.
