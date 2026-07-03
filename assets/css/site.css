@@ -1,0 +1,594 @@
+/* ------------------------------------------------------------------
+   The Alice Tales — shared stylesheet
+   A Victorian-print look after the 1865/1871 Macmillan editions,
+   with John Tenniel's engravings.
+   ------------------------------------------------------------------ */
+
+/* ---- Self-hosted fonts (variable) -------------------------------- */
+
+@font-face {
+  font-family: 'EB Garamond';
+  src: url('../fonts/eb-garamond.woff2') format('woff2');
+  font-weight: 400 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'EB Garamond';
+  src: url('../fonts/eb-garamond-italic.woff2') format('woff2');
+  font-weight: 400 800;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Playfair Display';
+  src: url('../fonts/playfair.woff2') format('woff2');
+  font-weight: 400 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Playfair Display';
+  src: url('../fonts/playfair-italic.woff2') format('woff2');
+  font-weight: 400 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ---- Design tokens ------------------------------------------------ */
+
+:root {
+  --paper:        #eee1c4;   /* the desk the book lies on            */
+  --page:         #f8f0dc;   /* the page itself                      */
+  --page-edge:    #decba0;
+  --ink:          #2c2114;
+  --ink-soft:     #5c4c36;
+  --ink-faint:    #8a7457;
+  --crimson:      #7c1f1f;   /* Wonderland's red cloth binding       */
+  --crimson-deep: #5e1414;
+  --gilt:         #a97f2f;
+  --gilt-bright:  #c9a24b;
+  --gilt-pale:    #e3c983;
+  --teal:         #2b4f47;   /* Looking-glass cloth                  */
+  --teal-deep:    #1e3a34;
+  --silver:       #b8c4c0;
+  --rule:         #b49a6d;
+
+  --serif:   'EB Garamond', Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+  --display: 'Playfair Display', 'EB Garamond', Georgia, serif;
+
+  /* a whisper of paper grain, tiled */
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.055'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---- Base --------------------------------------------------------- */
+
+* { box-sizing: border-box; }
+
+html { height: 100%; }
+
+body {
+  margin: 0;
+  position: relative;
+  min-height: 100%;
+  background-color: var(--paper);
+  background-image:
+    radial-gradient(ellipse 120% 90% at 50% 0%, rgba(255, 250, 235, .55), rgba(255, 250, 235, 0) 55%),
+    radial-gradient(ellipse 140% 120% at 50% 100%, rgba(92, 62, 22, .16), rgba(92, 62, 22, 0) 60%);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 19px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* grain overlay across the whole site */
+body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--grain);
+  pointer-events: none;
+  z-index: 2;
+}
+
+main, header, footer, nav { position: relative; z-index: 3; }
+
+a { color: var(--crimson); text-decoration-color: rgba(124, 31, 31, .4); text-underline-offset: 3px; }
+a:hover { color: var(--crimson-deep); text-decoration-color: currentColor; }
+
+img { max-width: 100%; height: auto; }
+
+::selection { background: var(--gilt-pale); color: var(--ink); }
+
+/* ---- Small typographic parts -------------------------------------- */
+
+.smallcaps {
+  font-variant: small-caps;
+  letter-spacing: .14em;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 3.5rem auto;
+  max-width: 36rem;
+  color: var(--gilt);
+  font-size: 1.35rem;
+}
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  border-top: 3px double var(--rule);
+}
+
+.btn {
+  display: inline-block;
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-variant: small-caps;
+  letter-spacing: .18em;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--ink-soft);
+  outline: 1px solid var(--ink-soft);
+  outline-offset: 3px;
+  padding: .55em 1.5em .65em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color .18s ease, color .18s ease;
+}
+.btn:hover, .btn:focus-visible {
+  background: var(--ink);
+  color: var(--page);
+}
+
+/* ==================================================================
+   THE LIBRARY  (index.html)
+   ================================================================== */
+
+.masthead {
+  text-align: center;
+  padding: 5.5rem 1.25rem 0;
+}
+
+.masthead .fleuron {
+  color: var(--gilt);
+  font-size: 1.6rem;
+  letter-spacing: .6em;
+}
+
+.masthead h1 {
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: clamp(4.2rem, 13vw, 9rem);
+  letter-spacing: .06em;
+  line-height: 1;
+  margin: 1.2rem 0 0;
+  text-shadow: 0 1px 0 rgba(255, 253, 245, .6);
+}
+
+.masthead .subtitle {
+  margin: 1.4rem auto .4rem;
+  font-size: clamp(.95rem, 2.4vw, 1.2rem);
+  font-variant: small-caps;
+  letter-spacing: .34em;
+  color: var(--ink-soft);
+}
+
+.masthead .byline {
+  font-style: italic;
+  color: var(--ink-faint);
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+/* ---- The two books ------------------------------------------------ */
+
+.bookshelf {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 420px));
+  justify-content: center;
+  gap: clamp(1.5rem, 4vw, 4rem);
+  padding: 4.5rem 1.25rem 1rem;
+  max-width: 70rem;
+  margin: 0 auto;
+  perspective: 1600px;
+}
+
+.book {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  transition: transform .3s ease, filter .3s ease;
+}
+a.book:hover, a.book:focus-visible {
+  transform: translateY(-8px);
+  filter: brightness(1.04);
+  color: inherit;
+}
+a.book:focus-visible {
+  outline: 3px double var(--gilt);
+  outline-offset: 8px;
+}
+
+/* the cloth cover */
+.cover {
+  position: relative;
+  aspect-ratio: 5 / 7;
+  padding: 7%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border-radius: 4px 10px 10px 4px;
+  box-shadow:
+    inset 4px 0 9px -4px rgba(0, 0, 0, .55),   /* spine shading      */
+    inset -2px -2px 6px rgba(0, 0, 0, .25),
+    inset 2px 2px 6px rgba(255, 255, 255, .12),
+    0 18px 34px -12px rgba(46, 26, 4, .55),
+    0 3px 8px rgba(46, 26, 4, .25);
+}
+.cover::before {                                /* cloth weave */
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-image: var(--grain);
+  opacity: .9;
+  pointer-events: none;
+}
+.cover::after {                                 /* gilt frame */
+  content: "";
+  position: absolute;
+  inset: 4.5%;
+  border: 1px solid currentColor;
+  outline: 3px double currentColor;
+  outline-offset: 4px;
+  opacity: .85;
+  pointer-events: none;
+}
+
+.cover-wonderland {
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(255, 190, 140, .18), transparent 60%),
+    linear-gradient(160deg, #8d2a24 0%, var(--crimson) 45%, var(--crimson-deep) 100%);
+  color: var(--gilt-bright);
+}
+
+.cover-lookingglass {
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(190, 235, 220, .14), transparent 60%),
+    linear-gradient(160deg, #3a6a5f 0%, var(--teal) 45%, var(--teal-deep) 100%);
+  color: var(--silver);
+}
+
+.cover .medallion {
+  width: 58%;
+  aspect-ratio: 1 / 1.15;
+  margin-top: 6%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 50% 35%, #fdf7e7, var(--page) 70%, #eadfbf);
+  border: 1px solid currentColor;
+  box-shadow:
+    0 0 0 4px rgba(0, 0, 0, .18),
+    inset 0 2px 8px rgba(88, 60, 12, .35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 1;
+}
+.cover .medallion img {
+  width: 74%;
+  height: 82%;
+  object-fit: contain;
+  filter: sepia(.25);
+}
+
+.cover h2 {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(1.15rem, 2.6vw, 1.6rem);
+  line-height: 1.25;
+  letter-spacing: .04em;
+  margin: 8% 0 0;
+  z-index: 1;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .4);
+}
+
+.cover .cover-sub {
+  font-style: italic;
+  font-size: .95rem;
+  opacity: .85;
+  margin: .5em 0 0;
+  z-index: 1;
+}
+
+.cover .cover-rule {
+  width: 34%;
+  border: none;
+  border-top: 1px solid currentColor;
+  opacity: .6;
+  margin: 7% 0 0;
+}
+
+.cover .cover-foot {
+  margin-top: auto;
+  font-variant: small-caps;
+  letter-spacing: .28em;
+  font-size: .8rem;
+  opacity: .9;
+  z-index: 1;
+}
+
+/* colophon strip under each cover */
+.book-info {
+  text-align: center;
+  padding: 1.6rem .5rem 0;
+}
+.book-info .meta {
+  display: block;
+  font-variant: small-caps;
+  letter-spacing: .2em;
+  font-size: .85rem;
+  color: var(--ink-faint);
+  margin: 0 0 1.1rem;
+}
+.book-info .ribbon-row {
+  display: block;
+  margin: 0 0 1.15rem;
+}
+.book .btn { margin-top: .2rem; }
+
+.ribbon {
+  display: inline-block;
+  font-variant: small-caps;
+  letter-spacing: .2em;
+  font-size: .85rem;
+  color: var(--page);
+  background: var(--teal);
+  padding: .35em 1.1em .45em;
+  border: 1px solid var(--teal-deep);
+  box-shadow: 0 2px 5px rgba(30, 58, 52, .4);
+}
+
+/* ---- How to play --------------------------------------------------- */
+
+.howto {
+  max-width: 66rem;
+  margin: 0 auto;
+  padding: 0 1.25rem 1rem;
+  text-align: center;
+}
+
+.howto h2, .section-title {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  letter-spacing: .04em;
+  margin: 0 0 .4em;
+}
+
+.howto > p.lede {
+  max-width: 44rem;
+  margin: 0 auto;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+.howto-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1.25rem, 3vw, 3rem);
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.howto-card img {
+  height: 150px;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  filter: sepia(.22);
+}
+
+.howto-card h3 {
+  font-family: var(--display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 1.1rem 0 .4rem;
+}
+.howto-card h3 .step {
+  display: block;
+  font-family: var(--serif);
+  font-variant: small-caps;
+  font-weight: 400;
+  letter-spacing: .3em;
+  font-size: .8rem;
+  color: var(--gilt);
+  margin-bottom: .5em;
+}
+
+.howto-card p {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--ink-soft);
+}
+
+.howto-card kbd {
+  font-family: var(--serif);
+  font-variant: small-caps;
+  letter-spacing: .1em;
+  font-size: .95em;
+  background: var(--page);
+  border: 1px solid var(--rule);
+  border-bottom-width: 2px;
+  border-radius: 3px;
+  padding: 0 .45em .1em;
+  white-space: nowrap;
+}
+
+/* ---- Quotation ----------------------------------------------------- */
+
+.quotation {
+  max-width: 38rem;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+  text-align: center;
+  font-style: italic;
+  font-size: 1.25rem;
+  color: var(--ink-soft);
+}
+.quotation cite {
+  display: block;
+  margin-top: 1rem;
+  font-style: normal;
+  font-variant: small-caps;
+  letter-spacing: .22em;
+  font-size: .85rem;
+  color: var(--ink-faint);
+}
+
+/* ---- Footer -------------------------------------------------------- */
+
+.colophon {
+  margin-top: 4.5rem;
+  padding: 3rem 1.25rem 3.5rem;
+  text-align: center;
+  border-top: 3px double var(--rule);
+  background: linear-gradient(rgba(60, 40, 10, .05), rgba(60, 40, 10, 0) 40%);
+}
+
+.colophon img.grin {
+  height: 92px;
+  width: auto;
+  opacity: .8;
+  filter: sepia(.3);
+  margin-bottom: 1.4rem;
+}
+
+.colophon p {
+  max-width: 46rem;
+  margin: .35rem auto;
+  font-size: .95rem;
+  color: var(--ink-faint);
+}
+.colophon a { color: var(--ink-soft); }
+
+/* ==================================================================
+   THROUGH THE LOOKING-GLASS  (teaser page)
+   ================================================================== */
+
+.glass-hall {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 3.5rem 1.25rem 2rem;
+  text-align: center;
+}
+
+.mirror-frame {
+  width: min(21rem, 78vw);
+  margin: 2.5rem auto 0;
+  padding: clamp(.9rem, 2.5vw, 1.4rem);
+  border-radius: 47% 47% 6px 6px / 34% 34% 6px 6px;
+  background: linear-gradient(160deg, #b8963f, #96721f 45%, #6e4f15 85%);
+  box-shadow:
+    inset 0 2px 4px rgba(255, 240, 200, .7),
+    inset 0 -3px 6px rgba(70, 45, 8, .6),
+    0 16px 34px -10px rgba(46, 26, 4, .5);
+}
+
+.mirror-glass {
+  border-radius: 45% 45% 4px 4px / 32% 32% 4px 4px;
+  background:
+    linear-gradient(155deg, rgba(255, 255, 255, .65) 0%, rgba(233, 240, 238, .2) 30%, rgba(160, 180, 175, .25) 100%),
+    linear-gradient(#dfe7e2, #c5d2cc);
+  box-shadow: inset 0 0 22px rgba(70, 90, 84, .45);
+  overflow: hidden;
+}
+
+.mirror-glass img {
+  display: block;
+  width: 100%;
+  height: auto;
+  mix-blend-mode: multiply;   /* let the glass shine through the engraving */
+  filter: sepia(.15);
+}
+
+.glass-hall h1 {
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: clamp(2.1rem, 6vw, 3.2rem);
+  letter-spacing: .03em;
+  line-height: 1.15;
+  margin: 2.8rem 0 0;
+}
+
+.glass-hall .subtitle {
+  font-style: italic;
+  color: var(--ink-soft);
+  font-size: 1.15rem;
+  margin: .6rem 0 0;
+}
+
+.glass-hall .notice {
+  max-width: 34rem;
+  margin: 2.2rem auto 0;
+  color: var(--ink-soft);
+}
+
+/* the mirrored stanza, as printed in the book */
+.jabberwock {
+  margin: 3rem auto 0;
+  max-width: 30rem;
+  padding: 1.6rem 1.9rem;
+  background: var(--page);
+  border: 1px solid var(--page-edge);
+  box-shadow: 0 8px 22px -10px rgba(46, 26, 4, .35);
+}
+.jabberwock .verse {
+  transform: scaleX(-1);
+  font-style: italic;
+  font-size: 1.1rem;
+  line-height: 1.75;
+  white-space: pre-line;
+}
+.jabberwock .hint {
+  margin: 1.2rem 0 0;
+  font-size: .85rem;
+  font-variant: small-caps;
+  letter-spacing: .22em;
+  color: var(--ink-faint);
+}
+
+.glass-hall .kitten {
+  height: 110px;
+  width: auto;
+  margin-top: 3rem;
+  opacity: .85;
+  filter: sepia(.25);
+}
+
+/* ==================================================================
+   Responsive
+   ================================================================== */
+
+@media (max-width: 780px) {
+  body { font-size: 17px; }
+
+  .masthead { padding-top: 3.5rem; }
+
+  .bookshelf {
+    grid-template-columns: minmax(0, 340px);
+    padding-top: 3rem;
+  }
+
+  .howto-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .howto-card img { height: 120px; }
+
+  .divider { margin: 2.6rem auto; }
+}
